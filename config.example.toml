@@ -1,0 +1,21 @@
+# Copy to ~/.config/mailkanban/config.toml and `chmod 600` it.
+# Never commit your real config or app password.
+
+[account]
+address = "you@gmail.com"
+password = ""          # prefer leaving empty and using MAILKANBAN_PASSWORD
+host = "imap.gmail.com"
+port = 993
+
+[board]
+# Labels rendered as kanban columns, left to right.
+# Use the Gmail label name exactly as it appears in the sidebar.
+columns = ["Inbox", "@todo", "@doing", "@done"]
+
+[behavior]
+# When moving a message to another column, also remove it from the
+# source column's label (Gmail "move" semantics). Set false to add
+# the target label while keeping the source label.
+move_removes_source = true
+# Max messages fetched per column.
+per_column_limit = 50
