@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mailkanban — your Gmail as a kanban board</title>
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    max-width: 46rem;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    line-height: 1.65;
+  }
+  a { color: #0969da; }
+  @media (prefers-color-scheme: dark) { a { color: #4493f8; } }
+  pre {
+    background: #f6f8fa; border-radius: 6px; padding: 1rem;
+    overflow-x: auto; font-size: 0.875rem;
+  }
+  @media (prefers-color-scheme: dark) { pre { background: #151b23; } }
+  code { font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace; }
+  table { border-collapse: collapse; }
+  th, td { border: 1px solid #d0d7de; padding: 0.375rem 0.75rem; }
+  th { background: #f6f8fa; }
+  @media (prefers-color-scheme: dark) { th, td { border-color: #3d444d; } th { background: #151b23; } }
+  h1, h2 { border-bottom: 1px solid #d0d7de; padding-bottom: 0.3em; }
+  @media (prefers-color-scheme: dark) { h1, h2 { border-color: #3d444d; } }
+  blockquote { margin: 0; padding: 0 1em; color: #59636e; border-left: 0.25em solid #d0d7de; }
+  @media (prefers-color-scheme: dark) { blockquote { color: #9198a1; border-color: #3d444d; } }
+</style>
+</head>
+<body>
+<h1>mailkanban — your Gmail as a kanban board</h1>
+<p>A Textual TUI that renders your Gmail labels as kanban columns. Move a card, and your mail moves: messages get label changes applied over IMAP with real Gmail "move" semantics (add target label, remove source label).</p>
+<h2>Keys</h2>
+<table>
+<thead><tr><th>key</th><th>action</th></tr></thead>
+<tbody>
+<tr><td>h / l</td><td>previous / next column</td></tr>
+<tr><td>j / k</td><td>down / up through messages</td></tr>
+<tr><td>m</td><td>move the focused message to another column (label)</td></tr>
+<tr><td>f</td><td>view the full mail (modal, j/k scroll)</td></tr>
+<tr><td>a</td><td>archive</td></tr>
+<tr><td>r</td><td>refresh</td></tr>
+<tr><td>q</td><td>quit</td></tr>
+</tbody></table>
+<h2>Run</h2>
+<p>uv sync cp config.example.toml ~/.config/mailkanban/config.toml  # then fill it in uv run mailkanban</p>
+<p>Gmail users: enable an app password (or your account's IMAP password) and prefer leaving password empty in the config, setting MAILKANBAN_PASSWORD instead. The config file is gitignored for a reason — never commit credentials.</p>
+<h2>Config</h2>
+<p>Columns are configured Gmail label names, rendered left to right:</p>
+<pre><code class="language-toml">[board]
+columns = [&quot;Inbox&quot;, &quot;@todo&quot;, &quot;@doing&quot;, &quot;@done&quot;]
+
+[behavior]
+move_removes_source = true   # Gmail &quot;move&quot; semantics
+per_column_limit = 50</code></pre>
+<h2>Layout</h2>
+<ul>
+<li>src/mailkanban/imap.py — Gmail-over-IMAP client (labels, moves,</li>
+</ul>
+<p>fetch, archive, reconnects)</p>
+<ul>
+<li>src/mailkanban/app.py — the Textual UI</li>
+<li>src/mailkanban/config.py — TOML config loading</li>
+</ul>
+<p>Also live at: https://razodin137.github.io/2026-09-20-emailtui-kanban/</p>
+</body>
+</html>
